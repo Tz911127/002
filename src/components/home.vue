@@ -125,7 +125,7 @@ img {
   padding: 68px 1rem 1rem 1rem;
   background: #f5f7fb;
 }
-.mu-elevation-4 {
+/* .mu-elevation-4 {
   box-shadow: 0 1px 10px 0 rgba(233, 237, 246, 0.12);
-}
+} */
 </style>

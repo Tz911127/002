@@ -1,7 +1,7 @@
 {
-  "name": "a-vue",
+  "name": "qmedia",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "H5.js project",
   "author": "tianzheng <tz911127@163.com>",
   "private": true,
   "scripts": {

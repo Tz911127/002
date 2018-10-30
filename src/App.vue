@@ -2,8 +2,7 @@
 <template>
 
   <div id="app">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <img src="./assets/logo.png"> -->
+   <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
     <router-view/>
   </div>
 </template>
@@ -30,5 +29,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
+  background: #f5f7fb;
 }
 </style>

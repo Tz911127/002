@@ -35,59 +35,59 @@
                  <mu-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"></mu-option>
                </mu-select>
             </mu-form-item>
-            <mu-form-item prop="contractStart" label="合同开始时间" :rules="startRules" >
-               <mu-date-input v-model="form.contractStart" placeholder="请输入时间" s label-float full-width no-display></mu-date-input>
+            <mu-form-item prop="contractStart" label="合同开始时间" :rules="startRules">
+               <mu-date-input v-model="form.contractStart" placeholder="请输入时间" label-float full-width no-display></mu-date-input>
             </mu-form-item>
-            <mu-form-item prop="contractEnd" label="合同结束时间" :rules="endRules" >
-              <mu-date-input v-model="form.contractEnd"  placeholder="请输入时间" s label-float full-width  no-display></mu-date-input>
+            <mu-form-item prop="contractEnd" label="合同结束时间" :rules="endRules">
+              <mu-date-input v-model="form.contractEnd"  placeholder="请输入时间" label-float full-width  no-display></mu-date-input>
             </mu-form-item>
            <mu-form-item prop="payType" label="收费方式" :rules="payType">
-                <mu-select v-model="form.payType" s>
+                <mu-select v-model="form.payType">
                  <mu-option v-for="item in items" :key="item.value" :label="item.label" :value="item.value"></mu-option>
                 </mu-select>
             </mu-form-item>
              <mu-form-item prop="terminalExpiredMonth" label="终端使用时间" :rules="terminal">
-                <mu-select v-model="form.terminalExpiredMonth" s>
+                <mu-select v-model="form.terminalExpiredMonth">
                  <mu-option v-for="time in times" :key="time.value" :label="time.label" :value="time.value"></mu-option>
                 </mu-select>
             </mu-form-item>
             <mu-form-item label="素材审核" prop='materialCheck'>
-                <mu-select v-model="form.materialCheck"  multiple s>
+                <mu-select v-model="form.materialCheck"  multiple>
                   <mu-option v-for="materialCheckItem in materialChecks" :key="materialCheckItem.value" :label="materialCheckItem.label" :value="materialCheckItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
             <mu-form-item label="节目审核" prop='programCheck'>
-                <mu-select v-model="form.programCheck" multiple s>
+                <mu-select v-model="form.programCheck" multiple>
                   <mu-option v-for="programCheckItem in programChecks" :key="programCheckItem.value" :label="programCheckItem.label" :value="programCheckItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
              <mu-form-item label="文字屏管理" prop='ledShow'>
-                <mu-select v-model="form.ledShow"  multiple s>
+                <mu-select v-model="form.ledShow"  multiple>
                   <mu-option v-for="ledShowItem in ledShows" :key="ledShowItem.value" :label="ledShowItem.label" :value="ledShowItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
             <mu-form-item label="排期管理" prop='programScheduleShow'>
-                <mu-select v-model="form.programScheduleShow"  multiple s>
+                <mu-select v-model="form.programScheduleShow"  multiple >
                   <mu-option v-for="programScheduleShowItem in programScheduleShows" :key="programScheduleShowItem.value" :label="programScheduleShowItem.label" :value="programScheduleShowItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
-            <mu-form-item label="央视素材" prop='cctvShow'>
-                <mu-select v-model="form.cctvShow"  multiple s>
+            <mu-form-item label="央视素材" prop='cctvShow'  >
+                <mu-select v-model="form.cctvShow"  multiple >
                   <mu-option v-for="cctvShowItem in cctvShows" :key="cctvShowItem.value" :label="cctvShowItem.label" :value="cctvShowItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
             <mu-form-item label="央视审核" prop='cctvCheck'>
-                <mu-select v-model="form.cctvCheck"  multiple s>
+                <mu-select v-model="form.cctvCheck"  multiple>
                   <mu-option v-for="cctvCheckItem in cctvChecks" :key="cctvCheckItem.value" :label="cctvCheckItem.label" :value="cctvCheckItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
              <mu-form-item label="编辑器配置" prop='editorType'>
-                <mu-select  v-model="form.editorType" full-width s>
+                <mu-select  v-model="form.editorType" full-width>
                   <mu-option v-for="editorTypesItem in editorTypes" :key="editorTypesItem.value" :label="editorTypesItem.label" :value="editorTypesItem.value"></mu-option>
                 </mu-select>
             </mu-form-item>
             <!-- <mu-form-item> -->
-              <div class="btn_ok"><mu-button @click="submit">确定</mu-button></div>
+              <div class="btn_ok"><mu-button @click="submit" large>确定</mu-button></div>
             <!-- </mu-form-item> -->
         </mu-form>
         </div>
@@ -95,6 +95,12 @@
           {{message}}
           <mu-button slot="actions" flat color="primary" @click="closeSimpleDialog">知道了</mu-button>
         </mu-dialog>
+        <mu-snackbar :position="normal.position" :color="normal.color" :open.sync="normal.open">
+          {{normal.message}}
+        </mu-snackbar>
+        <mu-snackbar :position="color.position" :color="color.color" :open.sync="color.open">
+              {{color.message}}
+        </mu-snackbar>
     </section>
 </template>
 <script>
@@ -106,15 +112,15 @@ export default {
       form: {
         name: "",
         key: "",
-        payType: "",
+        payType: "终端",
         email: "",
         phone: "",
-        chargeType: "",
+        chargeType: "试用",
         contractStart: "",
         contractEnd: "",
         contact: "",
         type: "",
-        terminalExpiredMonth: "",
+        terminalExpiredMonth: "一年",
         materialCheck: [],
         programCheck: [],
         programScheduleShow: [],
@@ -220,16 +226,36 @@ export default {
       ],
       startRules: [{ validate: val => !!val, message: "必须填写合同开始时间" }],
       endRules: [{ validate: val => !!val, message: "必须填写合同结束时间" }],
-      name: [{ validate: val => !!val, message: "请输入联系人姓名" }],
+      name: [{ validate: val => !!val, message: "请输入公司名称" }],
       key: [{ validate: val => !!val, message: "请输入企业代码" }],
       email: [{ validate: val => !!val, message: "请输入邮箱" }],
       contact: [{ validate: val => !!val, message: "请输入联系人姓名" }],
-      phone: [{ validate: val => !!val, message: "请输入联系电话" }],
+      phone: [
+        { validate: val => !!val, message: "请输入联系电话" },
+        {
+          validate: val => val.length == 11,
+          message: "电话号码长度必须为11位"
+        }
+      ],
       payType: [{ validate: val => !!val, message: "请选择收费方式" }],
       terminal: [{ validate: val => !!val, message: "请选择终端使用时间" }],
       chargeType: [{ validate: val => !!val, message: "请选择账号类型" }],
       openSimple: false,
-      message: ""
+      message: "",
+      normal: {
+        position: "top",
+        color: "info",
+        message: "开始日期不得大于结束日期",
+        open: false,
+        timeout: 2000
+      },
+      color: {
+        position: "top",
+        color: "success",
+        message: "操作成功",
+        open: false,
+        timeout: 2000
+      }
     };
   },
   methods: {
@@ -249,9 +275,18 @@ export default {
             this.form.editorType == "标准版" ? 0 : this.form.editorType;
           param.contractStart = contractStart;
           param.contractEnd = contractEnd;
+          param.terminalExpiredMonth =
+            this.form.terminalExpiredMonth == "一年"
+              ? 12
+              : this.form.terminalExpiredMonth;
           param.chargeType =
-            this.form.chargeType == 2 ? 0 : this.form.chargeType;
-          param.payType = this.form.payType == 2 ? 0 : this.form.payType;
+            this.form.chargeType == "试用" || 2 ? 0 : this.form.chargeType;
+          param.payType =
+            this.form.payType == 2
+              ? 0
+              : this.form.payType == "终端"
+                ? 1
+                : this.form.payType;
           for (let i = 0; i < this.form.materialCheck.length; i++) {
             material += "," + this.form.materialCheck[i];
           }
@@ -282,15 +317,27 @@ export default {
           param.programScheduleShow = scheduleShow.substr(1)
             ? scheduleShow.substr(1)
             : 0;
-          postDomain(param).then(res => {
-            // javascript: history.back(-1);
-            if (res.data.code == 1) {
-              javascript: history.back(-1);
-            } else {
-              this.openSimple = true;
-              this.message = res.data.message;
-            }
-          });
+
+          if (
+            this.form.contractStart.getTime() < this.form.contractEnd.getTime()
+          ) {
+            postDomain(param).then(res => {
+              if (res.data.code == 1) {
+                this.color.open = true;
+                this.color.timer = setTimeout(() => {
+                  javascript: history.back(-1);
+                }, this.color.timeout);
+              } else {
+                this.openSimple = true;
+                this.message = res.data.message;
+              }
+            });
+          } else {
+            this.normal.open = true;
+            this.normal.timer = setTimeout(() => {
+              this.normal.open = false;
+            }, this.normal.timeout);
+          }
         }
       });
     },
@@ -347,7 +394,7 @@ export default {
 .mu-item-title {
   font-size: 0.75rem !important;
 }
-.mu-elevation-4 {
+/* .mu-elevation-4 {
   box-shadow: 0 1px 10px 0 rgba(233, 237, 246, 0.12);
-}
+} */
 </style>

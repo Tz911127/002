@@ -9,10 +9,10 @@
        <!-- 用户名/密码 -->
         <mu-container>
             <mu-form ref="form" :model="validateForm" class="mu-demo-form">
-              <mu-form-item prop="username" :rules="usernameRules">  
+              <mu-form-item prop="username" :rules="usernameRules" class="username">  
                 <mu-text-field v-model="validateForm.username" placeholder="请输入账号" prop="username"><img src="../assets/account.png" alt=""></mu-text-field>
               </mu-form-item>
-              <mu-form-item  prop="password" :rules="passwordRules">
+              <mu-form-item  prop="password" :rules="passwordRules" class="password">
                   <mu-text-field type="password" v-model="validateForm.password" placeholder="请输入密码" prop="password"><img src="../assets/pwd.png" alt=""></mu-text-field>
               </mu-form-item>
               <mu-form-item>
@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       usernameRules: [
-        { validate: val => !!val, message: "必须填写用户名" }
-        // { validate: val => val.length >= 3, message: "用户名长度大于3" }
+        { validate: val => !!val, message: "必须填写用户名" },
+        { validate: val => val.length >= 3, message: "用户名长度大于3" }
       ],
       passwordRules: [
         { validate: val => !!val, message: "必须填写密码" },
@@ -126,7 +126,6 @@ export default {
             this.validateForm.username = arr2[1]; //保存到保存数据的地方
           } else if (arr2[0] == "userPwd") {
             this.validateForm.password = Base64.decode(arr2[1]);
-            
           }
         }
       }
@@ -142,8 +141,9 @@ export default {
 };
 </script>
 <style>
-.mu-text-field-input {
-  margin-left: 2rem!important;
+.username .mu-text-field-input,
+.password .mu-text-field-input {
+  margin-left: 2rem !important;
 }
 .mu-demo-form {
   width: 100%;
@@ -153,7 +153,8 @@ export default {
   height: 50pt;
 }
 .img {
-  margin: 7rem 1rem 3rem 1rem;
+  margin: 0rem 1rem 3rem 1rem;
+  padding-top: 7rem
 }
 .mu-item-action {
   display: inline-block;
