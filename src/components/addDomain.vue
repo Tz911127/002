@@ -368,6 +368,7 @@ export default {
 }
 .main_add {
   padding-top: 60px;
+  padding-bottom:60px;
 }
 .mu-appbar-left {
   background: url("../assets/icon_return@3x.png") no-repeat;

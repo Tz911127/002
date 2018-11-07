@@ -64,9 +64,13 @@ export default {
   },
   methods: {
     getData() {
-      const routerParams = this.$route.query.data;
-      this.data = routerParams;
-      console.log(routerParams);
+     const routerParams = this.$route.query.data;
+     this.data = routerParams;
+      if(routerParams.id) {
+      // this.data = routerParams;
+      }else {
+        javascript: history.back(-1);
+      }
     },
     goBack() {
       javascript: history.back(-1);
@@ -74,26 +78,8 @@ export default {
     checkPass(data) {
       if (Number(data) == 1) {
         this.openPassAlert = true;
-        // let param = {
-        //   id: this.data.id,
-        //   status: 1
-        // };
-        // postCheckInfo(param).then(res => {
-        //   if (res.data.code == 1) {
-        //     javascript: history.back(-1);
-        //   }
-        // });
       } else {
         this.openNoPassAlert = true;
-        // let param = {
-        //   id: this.data.id,
-        //   status: 2
-        // };
-        // postCheckInfo(param).then(res => {
-        //   if (res.data.code == 1) {
-        //     javascript: history.back(-1);
-        //   }
-        // });
       }
     },
     closePassDialog(num) {

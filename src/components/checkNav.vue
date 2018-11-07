@@ -8,7 +8,7 @@
         
         
         <div class="main_check">
-          <div v-for="item in checkData" :key="item.id" class="nav" @click="detail(item.id)">
+          <div v-for="item in checkData" :key="item.id" class="nav" @click="detail(item)">
             <div class="title">
               <div class="left">{{item.createTime|filter(item.createTime)}}</div>
               <div class="right"><div class="main_nav_check">{{item.status ==0?"待审核":item.status ==1?"审核通过":"审核不通过"}}</div></div>
@@ -41,10 +41,15 @@ export default {
   data() {
     return {
       checkData: [],
-      start: 0
+      start: 0,
+      fids: ""
     };
   },
   methods: {
+    getData() {
+      const fids = this.$route.query.data;
+      this.fids = fids;
+    },
     getCheckModelData() {
       let param = {
         length: 10,
@@ -82,7 +87,8 @@ export default {
       this.$router.push({
         path: "/navDetail",
         query: {
-          data: data
+          data: data,
+          fids:this.fids
         }
       });
     }
@@ -90,6 +96,9 @@ export default {
   mounted() {
     this.getCheckModelData();
     window.addEventListener("scroll", this.scrollBottom);
+  },
+  created() {
+    this.getData();
   },
   filters: {
     filter(str_time) {
@@ -137,7 +146,7 @@ export default {
 .nav {
   background: #fff;
   padding: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   border-radius: 0.25rem;
   font-size: 0.75rem;
 }
@@ -157,14 +166,14 @@ export default {
 .main_nav_check {
   background: #fa8c16;
   color: #fff;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   border-radius: 1rem;
   display: inline-block;
-  margin: 0!important;
+  margin: 0 !important;
 }
 .main_nav {
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(0, 0, 0, .1)
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .title {
   margin-bottom: 1rem;

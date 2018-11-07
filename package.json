@@ -19,8 +19,10 @@
     "js-base64": "^2.4.9",
     "muse-ui": "^3.0.1",
     "muse-ui-toast": "^0.3.0",
+    "pdfjs-dist": "^2.0.943",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vueshowpdf": "^1.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

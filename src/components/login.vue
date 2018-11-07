@@ -31,7 +31,6 @@
 import { requestLogin } from "../api/api";
 import md_5 from "../util/md_5.js";
 let Base64 = require("js-base64").Base64;
-// import { encode } from "../util/base.js";
 export default {
   data() {
     return {
@@ -65,7 +64,12 @@ export default {
         };
         requestLogin(param).then(res => {
           if (res.data.code == 1) {
-            this.$router.push("/home");
+            this.$router.push({
+              path: "/home",
+              query: {
+                data: res.data.content.fids
+              }
+            });
             this.setCookie(account, Base64.encode(password), 1);
           } else {
             this.openSimple = true;
@@ -154,7 +158,7 @@ export default {
 }
 .img {
   margin: 0rem 1rem 3rem 1rem;
-  padding-top: 7rem
+  padding-top: 7rem;
 }
 .mu-item-action {
   display: inline-block;

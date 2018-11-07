@@ -6,8 +6,14 @@
         </mu-button>
         </mu-appbar>
         <div class="nav" style="padding-top:64px">
-          <iframe :src="src" ></iframe>
-          <div class="btns">
+          <iframe :src="src" :style="ifr" v-if="flag"></iframe>
+          <div>
+            <video v-if="type==1" :src="img" controls="controls" style="width:100%"></video>
+            <audio v-else-if="type == 2" :src="img" controls="controls"></audio>
+            <img v-else-if="type == 0"  :src="img" style="width:100%" alt="">
+            <iframe v-else :src="'/H5/static/pdf/web/viewer.html?file='+encodeURIComponent(img)" height="430px" width="100%"></iframe>
+          </div>
+          <div class="btns" v-if="btn">
             <mu-button @click="checkPass(1)">审核通过</mu-button>
             <mu-button @click="checkPass(5)">审核不通过</mu-button>
             <mu-dialog title="审核不通过的原因" width="600" max-width="80%" :esc-press-close="false" :overlay-close="false" :open.sync="openAlert">
@@ -53,23 +59,52 @@ export default {
         message: "操作成功",
         open: false,
         timeout: 2000
-      }
+      },
+      flag: true,
+      img: "",
+      type: "",
+      ifr: "",
+      pdf: "",
+      btn: true
     };
   },
   methods: {
     getData() {
-      const routerParams = this.$route.query.data;
+      const routerParams = this.$route.query.data.id;
+      const fids = this.$route.query.fids;
+      if (fids.indexOf("411") == -1) {
+        this.btn = false;
+      }
       this.pid = routerParams;
       let param = {
         id: routerParams
       };
-      getCheckNav(param).then(res => {
-        this.src =
-          "http://sys.e-media.vip/TBXEditor/preview_online/index_online_a.html?domain=whkm" +
-          // getCookie("userName") +
-          "&pid=" +
-          res.data.content.id;
-      });
+      if (this.$route.query.data.type == 1) {
+        this.flag = true;
+        getCheckNav(param).then(res => {
+          this.src =
+            "http://sys.e-media.vip/TBXEditor/preview_online/index_online_a.html?domain=whkm" +
+            "&pid=" +
+            res.data.content.id;
+          if (
+            res.data.content.pixelVertical > res.data.content.pixelHorizontal
+          ) {
+            this.ifr = "height:100vh";
+          }
+        });
+      } else {
+        getCheckNav(param).then(res => {
+          console.log(res);
+          if (res.data.code == 0) {
+            javascript: history.back(-1);
+          } else {
+            this.flag = false;
+            this.img = res.data.content.path;
+            this.pdf = encodeURIComponent(this.img);
+            this.type = res.data.content.type;
+          }
+        });
+      }
     },
     goBack() {
       javascript: history.back(-1);

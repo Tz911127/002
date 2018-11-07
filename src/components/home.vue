@@ -7,44 +7,63 @@
           </mu-button>
          </mu-appbar>
       <div class="main">
-        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="checkNav">
+        <!--  -->
+        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="checkNav" v-if='check_Nav' >
             <img src="../assets/bule@3x.png" alt="">
             <div class="checkDetail">
                 <div class="checkTotal">{{checkTotal}}</div>
                 <div class="checkNav">待审核内容</div>
             </div>
         </mu-ripple>
-        
-        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="checkInfo">
+        <!-- v-if='checkInfo' -->
+        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="checkInfo" v-if='check_Info' >
             <img src="../assets/yellow@3x.png" alt="">
             <div class="checkDetail">
                 <div class="checkTotal">{{infoTotal}}</div>
                 <div class="checkNav">待审核商户</div>
             </div>
         </mu-ripple>
-
-        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="addDomain">
+        <!--  v-if='addDomain' -->
+        <mu-ripple class="check" color="#fff" :opacity="0.5" @click="addDomain" v-if='add_Domain'>
             <img src="../assets/cyan@3x.png" alt="">
             <div class="checkDetail">
                 <div class="checkTotal"><img src="../assets/icon_1@3x.png" alt=""></div>
                 <div class="checkNav">开账户</div>
             </div>
         </mu-ripple>
+        <!-- <div v-if="add_Domain&&check_Info&&check_Nav" style="line-height:35rem">此账号没有权限</div> -->
+        <div v-else style="line-height:35rem">此账号没有权限</div>
     </div>
     </section>
 </template>
 <script>
 import { getCheckModelList, getMerchantInfoList } from "../api/api";
-// import Qs from "qs";
-// import axios from "axios";
 export default {
   data() {
     return {
       checkTotal: 0,
-      infoTotal: 0
+      infoTotal: 0,
+      fids: "",
+      check_Nav: true,
+      check_Info: true,
+      add_Domain: true
     };
   },
   methods: {
+    getData() {
+      const fids = this.$route.query.data;
+      this.fids = fids;
+      if (fids.indexOf("41") == -1) {
+        this.check_Nav = false;
+      }
+      if (fids.indexOf("42") == -1) {
+        console.log("ok");
+        this.check_Info = false;
+      }
+      if (fids.indexOf("22") == -1) {
+        this.add_Domain = false;
+      }
+    },
     //   内容审核
     getCheckModelData() {
       let param = {
@@ -54,7 +73,9 @@ export default {
       };
       getCheckModelList(param).then(res => {
         console.log(res);
-        this.checkTotal = res.data.content.recordsTotal;
+        if (res.data.code == 1) {
+          this.checkTotal = res.data.content.recordsTotal;
+        }
       });
     },
     //商户审核
@@ -65,12 +86,14 @@ export default {
         status: 0
       };
       getMerchantInfoList(param).then(res => {
-        this.infoTotal = res.data.content.recordsTotal;
+        if (res.data.code == 1) {
+          this.infoTotal = res.data.content.recordsTotal;
+        }
       });
     },
     //跳转审核内容页面
     checkNav() {
-      this.$router.push("/checkNav");
+      this.$router.push({ path: "/checkNav", query: { data: this.fids } });
     },
     //跳转审核商户
     checkInfo() {
@@ -87,6 +110,9 @@ export default {
   mounted() {
     this.getCheckModelData();
     this.getMerchantInfoData();
+  },
+  created() {
+    this.getData();
   }
 };
 </script>
