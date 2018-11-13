@@ -9,13 +9,8 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-<<<<<<< HEAD
     // assetsPublicPath: './',
     assetsPublicPath: '/',
-=======
-    assetsPublicPath: './',
-    // assetsPublicPath: '/',
->>>>>>> 80260da3eeb32dee0bfb832702fc7841b664e99d
     proxyTable: {
 
     },

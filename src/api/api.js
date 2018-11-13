@@ -1,12 +1,9 @@
 import axios from 'axios';
 import Qs from "qs";
 
-<<<<<<< HEAD
 // let base = 'http://sys.e-media.vip/'
 let base = 'http://sys.q-media.cn/'
-=======
-let base = 'http://sys.e-media.vip/'
->>>>>>> 80260da3eeb32dee0bfb832702fc7841b664e99d
+// let base = 'http://sys.e-media.vip/'
 
 
 export const requestLogin = params => {

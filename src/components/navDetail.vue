@@ -72,10 +72,7 @@ export default {
     getData() {
       const routerParams = this.$route.query.data.id;
       const fids = this.$route.query.fids;
-<<<<<<< HEAD
       let domain = this.$route.query.data.domain;
-=======
->>>>>>> 80260da3eeb32dee0bfb832702fc7841b664e99d
       if (fids.indexOf("411") == -1) {
         this.btn = false;
       }
@@ -87,12 +84,9 @@ export default {
         this.flag = true;
         getCheckNav(param).then(res => {
           this.src =
-<<<<<<< HEAD
             "http://sys.q-media.cn/TBXEditor/preview_online/index_online_a.html?domain=" +
             domain +
-=======
             "http://sys.e-media.vip/TBXEditor/preview_online/index_online_a.html?domain=whkm" +
->>>>>>> 80260da3eeb32dee0bfb832702fc7841b664e99d
             "&pid=" +
             res.data.content.id;
           if (
